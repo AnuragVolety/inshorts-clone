@@ -4,9 +4,9 @@
     "slug": "inshorts-clone",
     "platforms": [
       "ios",
-      "android",
-      "web"
-    ],
+      "android"
+      ],
+    "sdkVersion": "37.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,10 +19,14 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anurag.inshortsclone"
+    },
+    "android": {
+      "package": "com.anurag.inshortsclone"
     }
   }
 }
