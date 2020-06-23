@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ActivityIndicator, SafeAreaView } from 'react-native';
-// import { WebView } from 'react-native-webview';
-// import Icon from 'react-native-vector-icons';
-// import { SafeAreaView } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 
 
@@ -17,12 +14,8 @@ constructor(props){
   this.swipedCardPosition = new Animated.ValueXY({ x: 0, y: -SCREEN_HEIGHT })
   this.state = {
     currentIndex : 0,
-    articles: null,
-    isLoading: true,
-    // currentTime: 0,
-    // duration: 0.2,
-    // pause: false,
-    // overlay: false
+    articles: [],
+    isLoading: true
   }
   }
 
@@ -38,24 +31,24 @@ constructor(props){
           })
         }
         else {
-          this.position.setValue({x:0, y: gestureState.dy})
+          this.state.currentIndex == 0? this.position.setValue({x:0, y: 0}) : this.position.setValue({x:0, y: gestureState.dy})
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
         if(this.state.currentIndex > 0 && gestureState.dy > 50 && gestureState.vy>0.7){
           Animated.timing(this.swipedCardPosition, {
             toValue:({x:0, y:0}),
-            duration: 400
+            duration: 80
           }).start(()=> {
             this.setState({ currentIndex: this.state.currentIndex - 1 })
             this.swipedCardPosition.setValue({ x: 0, y: -SCREEN_HEIGHT })
           })
         }
-        else if (-gestureState.dy > 50 && -gestureState.vy > 0.7) {
+        else if (-gestureState.dy > 50 && -gestureState.vy > 0.7 && this.state.currentIndex < this.state.articles.length - 1) {
 
           Animated.timing(this.position, {
             toValue: ({ x: 0, y: -SCREEN_HEIGHT }),
-            duration: 400
+            duration: 80
           }).start(() => {
             this.setState({ currentIndex: this.state.currentIndex + 1 })
             this.position.setValue({ x: 0, y: 0 })
@@ -114,7 +107,6 @@ constructor(props){
   renderMedia = (item) => {
     
     const mediaUri = item.mediaType == "video" ? item.uri.split('=')[1] : item.uri;
-    console.log(mediaUri);
 
     return item.mediaType == "image"? 
     (<View style={{ flex: 2, backgroundColor: 'black' }}>
