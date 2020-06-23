@@ -113,7 +113,7 @@ constructor(props){
 
   renderMedia = (item) => {
     
-    const mediaUri = item.mediaType == "video" ? mediaUri.split('=')[1] : item.uri;
+    const mediaUri = item.mediaType == "video" ? item.uri.split('=')[1] : item.uri;
     console.log(mediaUri);
 
     return item.mediaType == "image"? 
